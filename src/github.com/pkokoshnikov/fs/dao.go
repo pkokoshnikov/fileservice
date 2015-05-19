@@ -61,7 +61,7 @@ func (dao *DAO) ShowAllFiles() *list.List{
 	return list	
 }
 
-func (dao *DAO) UploadFile(r *http.Request){
+func (dao *DAO) UploadFile(r *http.Request) error {
 	session := dao.getMongoSession()
 	defer session.Close()
 	
@@ -82,6 +82,8 @@ func (dao *DAO) UploadFile(r *http.Request){
 		panic("File cannot be copied to databse")
 	}
 	log.Printf("File was copied, %s bytes", strconv.FormatInt(written, 10))
+	
+	return nil
 }
 
 func (dao *DAO) getMongoSession() (*mgo.Session) {

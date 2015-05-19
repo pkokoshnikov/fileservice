@@ -43,8 +43,10 @@ func uploadServiceHandler(w http.ResponseWriter, r *http.Request) {
 		case "POST":
 			log.Print("POST is called")
 			dao := fs.NewDAO()
-			dao.UploadFile(r)
-
+			err := dao.UploadFile(r)
+			if err != nil {
+				log.Print(err.Error())
+			}
 			fmt.Fprintf(w, "New file was posted\n")
 			
 		// Remove a file.
