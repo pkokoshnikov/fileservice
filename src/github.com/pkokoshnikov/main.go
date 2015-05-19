@@ -51,10 +51,10 @@ func uploadServiceHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print("DELETE is called")			
 			dao := fs.NewDAO()
 			filename := r.FormValue("fileName")
-			dao.DeleteFile(filename)
-			
+			dao.DeleteFile(filename)			
 			fmt.Fprintf(w, "Delete a file\n")
 			
+		// Unknown operation
 		default:
 		   	http.Error(w, "Unknown operation", http.StatusNotFound)	             
 	}
