@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Testing page</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+	$( document ).ready(function() {
+        var form = document.getElementById("deleteform");
+
+		$('#showAllButton').click( function () {
+		  	$.ajax({
+				url: '/upload/service', 
+				type: 'GET', 
+				success: function(data) { 
+					alert(data);
+				},
+				error: function(xhr, status, error) {
+					alert(xhr.responseText)
+				}
+			})
+		});
+		
+		$( '#uploadForm' ).submit( function( e ) {
+		    $.ajax({
+		    	url: '/upload/service',
+		    	type: 'POST',
+		    	data: new FormData( this ),
+		    	processData: false,
+		    	contentType: false,
+				success: function(data) {
+					alert(data);
+				},
+				error: function(xhr, status, error) {
+					alert(xhr.responseText)
+				}
+		    });
+			
+    		e.preventDefault();
+  		});
+		
+		
+		$('#deleteForm').submit( function( e ) {
+		    $.ajax({
+		    	url: '/upload/service?' + $(this).serialize(),
+				type: 'DELETE',
+				success: function(data) {
+					alert(data);
+				},
+				error: function(xhr, status, error) {
+					alert(xhr.responseText)
+				}
+			});
+			
+    		e.preventDefault();
+  		});
+    });	
+	</script>
+</head>
+<body>
+	<button id="showAllButton" href="#" onclick="">Show all files</button>
+	<form id="uploadForm" name="fileinfo" enctype="multipart/form-data">
+	    Select file to upload:
+	    <input type="file" name="fileToUpload" id="fileToUpload">
+	    <button id="uploadButton">Upload file</button>
+	</form>
+	<form id="deleteForm" name="deleteinfo">
+	  	Type name to delete:
+	   <input type="text" name="fileName" id="fileName">
+	   <button id="deleteButton">Delete file</button>	
+	</form>
+</body>
+</html>
